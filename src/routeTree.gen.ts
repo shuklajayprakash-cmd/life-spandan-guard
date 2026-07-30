@@ -15,7 +15,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedContactsRouteImport } from './routes/_authenticated/contacts'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
+import { Route as AuthenticatedHealthLockerRouteImport } from './routes/_authenticated/health-locker'
 import { Route as AuthenticatedMedicalProfileRouteImport } from './routes/_authenticated/medical-profile'
+import { Route as AuthenticatedQrCardRouteImport } from './routes/_authenticated/qr-card'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,12 +48,23 @@ const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHealthLockerRoute =
+  AuthenticatedHealthLockerRouteImport.update({
+    id: '/health-locker',
+    path: '/health-locker',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMedicalProfileRoute =
   AuthenticatedMedicalProfileRouteImport.update({
     id: '/medical-profile',
     path: '/medical-profile',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedQrCardRoute = AuthenticatedQrCardRouteImport.update({
+  id: '/qr-card',
+  path: '/qr-card',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -59,7 +72,9 @@ export interface FileRoutesByFullPath {
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/health-locker': typeof AuthenticatedHealthLockerRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
+  '/qr-card': typeof AuthenticatedQrCardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -67,7 +82,9 @@ export interface FileRoutesByTo {
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/health-locker': typeof AuthenticatedHealthLockerRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
+  '/qr-card': typeof AuthenticatedQrCardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,7 +94,9 @@ export interface FileRoutesById {
   '/_authenticated/contacts': typeof AuthenticatedContactsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
+  '/_authenticated/health-locker': typeof AuthenticatedHealthLockerRoute
   '/_authenticated/medical-profile': typeof AuthenticatedMedicalProfileRoute
+  '/_authenticated/qr-card': typeof AuthenticatedQrCardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -87,7 +106,9 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/dashboard'
     | '/emergency'
+    | '/health-locker'
     | '/medical-profile'
+    | '/qr-card'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -95,7 +116,9 @@ export interface FileRouteTypes {
     | '/contacts'
     | '/dashboard'
     | '/emergency'
+    | '/health-locker'
     | '/medical-profile'
+    | '/qr-card'
   id:
     | '__root__'
     | '/'
@@ -104,7 +127,9 @@ export interface FileRouteTypes {
     | '/_authenticated/contacts'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
+    | '/_authenticated/health-locker'
     | '/_authenticated/medical-profile'
+    | '/_authenticated/qr-card'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -157,11 +182,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmergencyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/health-locker': {
+      id: '/_authenticated/health-locker'
+      path: '/health-locker'
+      fullPath: '/health-locker'
+      preLoaderRoute: typeof AuthenticatedHealthLockerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/medical-profile': {
       id: '/_authenticated/medical-profile'
       path: '/medical-profile'
       fullPath: '/medical-profile'
       preLoaderRoute: typeof AuthenticatedMedicalProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/qr-card': {
+      id: '/_authenticated/qr-card'
+      path: '/qr-card'
+      fullPath: '/qr-card'
+      preLoaderRoute: typeof AuthenticatedQrCardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
@@ -171,14 +210,18 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedContactsRoute: typeof AuthenticatedContactsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
+  AuthenticatedHealthLockerRoute: typeof AuthenticatedHealthLockerRoute
   AuthenticatedMedicalProfileRoute: typeof AuthenticatedMedicalProfileRoute
+  AuthenticatedQrCardRoute: typeof AuthenticatedQrCardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedContactsRoute: AuthenticatedContactsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
+  AuthenticatedHealthLockerRoute: AuthenticatedHealthLockerRoute,
   AuthenticatedMedicalProfileRoute: AuthenticatedMedicalProfileRoute,
+  AuthenticatedQrCardRoute: AuthenticatedQrCardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

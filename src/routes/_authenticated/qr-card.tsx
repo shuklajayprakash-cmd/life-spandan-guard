@@ -83,7 +83,7 @@ function QrCardPage() {
         <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
           <div className="overflow-hidden rounded-2xl border-2 border-primary/25 bg-card shadow-elevated">
             <div className="flex items-center justify-between gap-4 gradient-signal px-6 py-4 text-primary-foreground">
-              <Logo variant="mono" />
+              <Logo compact />
               <p className="text-[11px] font-bold uppercase tracking-[0.18em]">Emergency card</p>
             </div>
             <div className="grid gap-6 p-6 sm:grid-cols-[1fr_auto]">
