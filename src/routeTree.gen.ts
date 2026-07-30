@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -33,16 +34,23 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
+  id: '/emergency',
+  path: '/emergency',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/emergency': typeof AuthenticatedEmergencyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/emergency': typeof AuthenticatedEmergencyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,14 +58,20 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard'
+  fullPaths: '/' | '/auth' | '/dashboard' | '/emergency'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to: '/' | '/auth' | '/dashboard' | '/emergency'
   id:
-    '__root__' | '/' | '/_authenticated' | '/auth' | '/_authenticated/dashboard'
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/emergency'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -96,15 +110,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/emergency': {
+      id: '/_authenticated/emergency'
+      path: '/emergency'
+      fullPath: '/emergency'
+      preLoaderRoute: typeof AuthenticatedEmergencyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
