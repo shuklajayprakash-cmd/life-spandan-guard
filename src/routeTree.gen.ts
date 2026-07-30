@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedContactsRouteImport } from './routes/_authenticated/contacts'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
+import { Route as AuthenticatedMedicalProfileRouteImport } from './routes/_authenticated/medical-profile'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +31,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedContactsRoute = AuthenticatedContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -39,39 +46,65 @@ const AuthenticatedEmergencyRoute = AuthenticatedEmergencyRouteImport.update({
   path: '/emergency',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMedicalProfileRoute =
+  AuthenticatedMedicalProfileRouteImport.update({
+    id: '/medical-profile',
+    path: '/medical-profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/medical-profile': typeof AuthenticatedMedicalProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
+  '/medical-profile': typeof AuthenticatedMedicalProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/contacts': typeof AuthenticatedContactsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
+  '/_authenticated/medical-profile': typeof AuthenticatedMedicalProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/emergency'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/contacts'
+    | '/dashboard'
+    | '/emergency'
+    | '/medical-profile'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/emergency'
+  to:
+    | '/'
+    | '/auth'
+    | '/contacts'
+    | '/dashboard'
+    | '/emergency'
+    | '/medical-profile'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/contacts'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
+    | '/_authenticated/medical-profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -103,6 +136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/contacts': {
+      id: '/_authenticated/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof AuthenticatedContactsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -117,17 +157,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEmergencyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/medical-profile': {
+      id: '/_authenticated/medical-profile'
+      path: '/medical-profile'
+      fullPath: '/medical-profile'
+      preLoaderRoute: typeof AuthenticatedMedicalProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedContactsRoute: typeof AuthenticatedContactsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
+  AuthenticatedMedicalProfileRoute: typeof AuthenticatedMedicalProfileRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedContactsRoute: AuthenticatedContactsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
+  AuthenticatedMedicalProfileRoute: AuthenticatedMedicalProfileRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
