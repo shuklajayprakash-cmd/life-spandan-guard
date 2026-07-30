@@ -1,24 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { Features } from "@/components/marketing/Features";
+import { Hero } from "@/components/marketing/Hero";
+import { HowItWorks } from "@/components/marketing/HowItWorks";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { SiteNav } from "@/components/marketing/SiteNav";
+import { Social } from "@/components/marketing/Social";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "LifeSpandan AI — Save Every Second. Save Every Life." },
+      {
+        name: "description",
+        content:
+          "AI-powered emergency healthcare ecosystem: one-tap SOS, portable medical identity, digital health locker, QR life card and family safety.",
+      },
+      { property: "og:title", content: "LifeSpandan AI — Save Every Second. Save Every Life." },
+      {
+        property: "og:description",
+        content:
+          "One tap sends your live location, medical history and vitals to family, hospitals and ambulances at once.",
+      },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-dvh bg-background">
+      <SiteNav />
+      <main>
+        <Hero />
+        <Features />
+        <HowItWorks />
+        <Social />
+      </main>
+      <SiteFooter />
     </div>
   );
 }
