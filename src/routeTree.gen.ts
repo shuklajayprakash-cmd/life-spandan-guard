@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedContactsRouteImport } from './routes/_authenticated/contacts'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
@@ -19,7 +20,9 @@ import { Route as AuthenticatedFamilyRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedHealthLockerRouteImport } from './routes/_authenticated/health-locker'
 import { Route as AuthenticatedMedicalProfileRouteImport } from './routes/_authenticated/medical-profile'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedQrCardRouteImport } from './routes/_authenticated/qr-card'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedSosHistoryRouteImport } from './routes/_authenticated/sos-history'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +38,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedContactsRoute = AuthenticatedContactsRouteImport.update({
   id: '/contacts',
@@ -74,9 +82,19 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedQrCardRoute = AuthenticatedQrCardRouteImport.update({
   id: '/qr-card',
   path: '/qr-card',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSosHistoryRoute = AuthenticatedSosHistoryRouteImport.update({
@@ -88,6 +106,7 @@ const AuthenticatedSosHistoryRoute = AuthenticatedSosHistoryRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
@@ -95,12 +114,15 @@ export interface FileRoutesByFullPath {
   '/health-locker': typeof AuthenticatedHealthLockerRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/qr-card': typeof AuthenticatedQrCardRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/sos-history': typeof AuthenticatedSosHistoryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/analytics': typeof AuthenticatedAnalyticsRoute
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
@@ -108,7 +130,9 @@ export interface FileRoutesByTo {
   '/health-locker': typeof AuthenticatedHealthLockerRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/qr-card': typeof AuthenticatedQrCardRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/sos-history': typeof AuthenticatedSosHistoryRoute
 }
 export interface FileRoutesById {
@@ -116,6 +140,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
   '/_authenticated/contacts': typeof AuthenticatedContactsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
@@ -123,7 +148,9 @@ export interface FileRoutesById {
   '/_authenticated/health-locker': typeof AuthenticatedHealthLockerRoute
   '/_authenticated/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/qr-card': typeof AuthenticatedQrCardRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/sos-history': typeof AuthenticatedSosHistoryRoute
 }
 export interface FileRouteTypes {
@@ -131,6 +158,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/analytics'
     | '/contacts'
     | '/dashboard'
     | '/emergency'
@@ -138,12 +166,15 @@ export interface FileRouteTypes {
     | '/health-locker'
     | '/medical-profile'
     | '/notifications'
+    | '/profile'
     | '/qr-card'
+    | '/settings'
     | '/sos-history'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/analytics'
     | '/contacts'
     | '/dashboard'
     | '/emergency'
@@ -151,13 +182,16 @@ export interface FileRouteTypes {
     | '/health-locker'
     | '/medical-profile'
     | '/notifications'
+    | '/profile'
     | '/qr-card'
+    | '/settings'
     | '/sos-history'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/analytics'
     | '/_authenticated/contacts'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
@@ -165,7 +199,9 @@ export interface FileRouteTypes {
     | '/_authenticated/health-locker'
     | '/_authenticated/medical-profile'
     | '/_authenticated/notifications'
+    | '/_authenticated/profile'
     | '/_authenticated/qr-card'
+    | '/_authenticated/settings'
     | '/_authenticated/sos-history'
   fileRoutesById: FileRoutesById
 }
@@ -197,6 +233,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/analytics': {
+      id: '/_authenticated/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthenticatedAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/contacts': {
       id: '/_authenticated/contacts'
@@ -247,11 +290,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/qr-card': {
       id: '/_authenticated/qr-card'
       path: '/qr-card'
       fullPath: '/qr-card'
       preLoaderRoute: typeof AuthenticatedQrCardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/sos-history': {
@@ -265,6 +322,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
   AuthenticatedContactsRoute: typeof AuthenticatedContactsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
@@ -272,11 +330,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedHealthLockerRoute: typeof AuthenticatedHealthLockerRoute
   AuthenticatedMedicalProfileRoute: typeof AuthenticatedMedicalProfileRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedQrCardRoute: typeof AuthenticatedQrCardRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSosHistoryRoute: typeof AuthenticatedSosHistoryRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
   AuthenticatedContactsRoute: AuthenticatedContactsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
@@ -284,7 +345,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHealthLockerRoute: AuthenticatedHealthLockerRoute,
   AuthenticatedMedicalProfileRoute: AuthenticatedMedicalProfileRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedQrCardRoute: AuthenticatedQrCardRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSosHistoryRoute: AuthenticatedSosHistoryRoute,
 }
 
