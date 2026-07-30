@@ -12,12 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAmbulanceRouteImport } from './routes/_authenticated/ambulance'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedContactsRouteImport } from './routes/_authenticated/contacts'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedEmergencyRouteImport } from './routes/_authenticated/emergency'
 import { Route as AuthenticatedFamilyRouteImport } from './routes/_authenticated/family'
 import { Route as AuthenticatedHealthLockerRouteImport } from './routes/_authenticated/health-locker'
+import { Route as AuthenticatedHospitalRouteImport } from './routes/_authenticated/hospital'
 import { Route as AuthenticatedMedicalProfileRouteImport } from './routes/_authenticated/medical-profile'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
@@ -38,6 +41,16 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAmbulanceRoute = AuthenticatedAmbulanceRouteImport.update({
+  id: '/ambulance',
+  path: '/ambulance',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAnalyticsRoute = AuthenticatedAnalyticsRouteImport.update({
   id: '/analytics',
@@ -70,6 +83,11 @@ const AuthenticatedHealthLockerRoute =
     path: '/health-locker',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedHospitalRoute = AuthenticatedHospitalRouteImport.update({
+  id: '/hospital',
+  path: '/hospital',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMedicalProfileRoute =
   AuthenticatedMedicalProfileRouteImport.update({
     id: '/medical-profile',
@@ -106,12 +124,15 @@ const AuthenticatedSosHistoryRoute = AuthenticatedSosHistoryRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/ambulance': typeof AuthenticatedAmbulanceRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
   '/family': typeof AuthenticatedFamilyRoute
   '/health-locker': typeof AuthenticatedHealthLockerRoute
+  '/hospital': typeof AuthenticatedHospitalRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -122,12 +143,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/ambulance': typeof AuthenticatedAmbulanceRoute
   '/analytics': typeof AuthenticatedAnalyticsRoute
   '/contacts': typeof AuthenticatedContactsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/emergency': typeof AuthenticatedEmergencyRoute
   '/family': typeof AuthenticatedFamilyRoute
   '/health-locker': typeof AuthenticatedHealthLockerRoute
+  '/hospital': typeof AuthenticatedHospitalRoute
   '/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/profile': typeof AuthenticatedProfileRoute
@@ -140,12 +164,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/ambulance': typeof AuthenticatedAmbulanceRoute
   '/_authenticated/analytics': typeof AuthenticatedAnalyticsRoute
   '/_authenticated/contacts': typeof AuthenticatedContactsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/emergency': typeof AuthenticatedEmergencyRoute
   '/_authenticated/family': typeof AuthenticatedFamilyRoute
   '/_authenticated/health-locker': typeof AuthenticatedHealthLockerRoute
+  '/_authenticated/hospital': typeof AuthenticatedHospitalRoute
   '/_authenticated/medical-profile': typeof AuthenticatedMedicalProfileRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
@@ -158,12 +185,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/admin'
+    | '/ambulance'
     | '/analytics'
     | '/contacts'
     | '/dashboard'
     | '/emergency'
     | '/family'
     | '/health-locker'
+    | '/hospital'
     | '/medical-profile'
     | '/notifications'
     | '/profile'
@@ -174,12 +204,15 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/admin'
+    | '/ambulance'
     | '/analytics'
     | '/contacts'
     | '/dashboard'
     | '/emergency'
     | '/family'
     | '/health-locker'
+    | '/hospital'
     | '/medical-profile'
     | '/notifications'
     | '/profile'
@@ -191,12 +224,15 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/admin'
+    | '/_authenticated/ambulance'
     | '/_authenticated/analytics'
     | '/_authenticated/contacts'
     | '/_authenticated/dashboard'
     | '/_authenticated/emergency'
     | '/_authenticated/family'
     | '/_authenticated/health-locker'
+    | '/_authenticated/hospital'
     | '/_authenticated/medical-profile'
     | '/_authenticated/notifications'
     | '/_authenticated/profile'
@@ -233,6 +269,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ambulance': {
+      id: '/_authenticated/ambulance'
+      path: '/ambulance'
+      fullPath: '/ambulance'
+      preLoaderRoute: typeof AuthenticatedAmbulanceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/analytics': {
       id: '/_authenticated/analytics'
@@ -274,6 +324,13 @@ declare module '@tanstack/react-router' {
       path: '/health-locker'
       fullPath: '/health-locker'
       preLoaderRoute: typeof AuthenticatedHealthLockerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/hospital': {
+      id: '/_authenticated/hospital'
+      path: '/hospital'
+      fullPath: '/hospital'
+      preLoaderRoute: typeof AuthenticatedHospitalRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/medical-profile': {
@@ -322,12 +379,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAmbulanceRoute: typeof AuthenticatedAmbulanceRoute
   AuthenticatedAnalyticsRoute: typeof AuthenticatedAnalyticsRoute
   AuthenticatedContactsRoute: typeof AuthenticatedContactsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEmergencyRoute: typeof AuthenticatedEmergencyRoute
   AuthenticatedFamilyRoute: typeof AuthenticatedFamilyRoute
   AuthenticatedHealthLockerRoute: typeof AuthenticatedHealthLockerRoute
+  AuthenticatedHospitalRoute: typeof AuthenticatedHospitalRoute
   AuthenticatedMedicalProfileRoute: typeof AuthenticatedMedicalProfileRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
@@ -337,12 +397,15 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAmbulanceRoute: AuthenticatedAmbulanceRoute,
   AuthenticatedAnalyticsRoute: AuthenticatedAnalyticsRoute,
   AuthenticatedContactsRoute: AuthenticatedContactsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEmergencyRoute: AuthenticatedEmergencyRoute,
   AuthenticatedFamilyRoute: AuthenticatedFamilyRoute,
   AuthenticatedHealthLockerRoute: AuthenticatedHealthLockerRoute,
+  AuthenticatedHospitalRoute: AuthenticatedHospitalRoute,
   AuthenticatedMedicalProfileRoute: AuthenticatedMedicalProfileRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
