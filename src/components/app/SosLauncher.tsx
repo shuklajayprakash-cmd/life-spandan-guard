@@ -94,12 +94,10 @@ export function SosLauncher() {
       });
       if (error) throw error;
 
-      await supabase.from("notifications").insert({
-        user_id: userData.user.id,
-        title: "Emergency alert dispatched",
-        body: "Your contacts and nearby responders were notified with your live location.",
-        category: "emergency",
-      });
+      // Notifications for the user and their linked family members are created
+      // automatically by the database trigger on emergency_events.
+
+
 
       queryClient.invalidateQueries();
       toast.error("SOS dispatched", {
