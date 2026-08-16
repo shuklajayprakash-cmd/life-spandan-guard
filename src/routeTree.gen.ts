@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAmbulanceRouteImport } from './routes/_authenticated/ambulance'
@@ -28,7 +29,6 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedQrCardRouteImport } from './routes/_authenticated/qr-card'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedSosHistoryRouteImport } from './routes/_authenticated/sos-history'
-import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -42,6 +42,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth-callback',
+  path: '/auth-callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -127,15 +132,11 @@ const AuthenticatedSosHistoryRoute = AuthenticatedSosHistoryRouteImport.update({
   path: '/sos-history',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthCallbackRoute = AuthCallbackRouteImport.update({
-  id: '/callback',
-  path: '/callback',
-  getParentRoute: () => AuthRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/ambulance': typeof AuthenticatedAmbulanceRoute
@@ -152,11 +153,11 @@ export interface FileRoutesByFullPath {
   '/qr-card': typeof AuthenticatedQrCardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/sos-history': typeof AuthenticatedSosHistoryRoute
-  '/auth/callback': typeof AuthCallbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/ambulance': typeof AuthenticatedAmbulanceRoute
@@ -173,13 +174,13 @@ export interface FileRoutesByTo {
   '/qr-card': typeof AuthenticatedQrCardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/sos-history': typeof AuthenticatedSosHistoryRoute
-  '/auth/callback': typeof AuthCallbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/auth-callback': typeof AuthCallbackRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/ambulance': typeof AuthenticatedAmbulanceRoute
@@ -196,13 +197,13 @@ export interface FileRoutesById {
   '/_authenticated/qr-card': typeof AuthenticatedQrCardRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/sos-history': typeof AuthenticatedSosHistoryRoute
-  '/auth/callback': typeof AuthCallbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/auth'
+    | '/auth-callback'
     | '/reset-password'
     | '/admin'
     | '/ambulance'
@@ -219,11 +220,11 @@ export interface FileRouteTypes {
     | '/qr-card'
     | '/settings'
     | '/sos-history'
-    | '/auth/callback'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/auth-callback'
     | '/reset-password'
     | '/admin'
     | '/ambulance'
@@ -240,12 +241,12 @@ export interface FileRouteTypes {
     | '/qr-card'
     | '/settings'
     | '/sos-history'
-    | '/auth/callback'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/auth-callback'
     | '/reset-password'
     | '/_authenticated/admin'
     | '/_authenticated/ambulance'
@@ -262,13 +263,13 @@ export interface FileRouteTypes {
     | '/_authenticated/qr-card'
     | '/_authenticated/settings'
     | '/_authenticated/sos-history'
-    | '/auth/callback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AuthRoute: typeof AuthRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
@@ -293,6 +294,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth-callback': {
+      id: '/auth-callback'
+      path: '/auth-callback'
+      fullPath: '/auth-callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -407,13 +415,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSosHistoryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/auth/callback': {
-      id: '/auth/callback'
-      path: '/callback'
-      fullPath: '/auth/callback'
-      preLoaderRoute: typeof AuthCallbackRouteImport
-      parentRoute: typeof AuthRoute
-    }
   }
 }
 
@@ -456,20 +457,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
-interface AuthRouteChildren {
-  AuthCallbackRoute: typeof AuthCallbackRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthCallbackRoute: AuthCallbackRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AuthRoute: AuthRouteWithChildren,
+  AuthRoute: AuthRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
